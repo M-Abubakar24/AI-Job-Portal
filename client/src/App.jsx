@@ -16,6 +16,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import MyJobs from "./pages/MyJobs";
 import Applicants from "./pages/Applicants";
 import Notifications from "./pages/Notifications";
+import EditJob from "./pages/EditJob";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return (
@@ -115,6 +118,22 @@ function App() {
       <Notifications />
     </ProtectedRoute>
   }
+/>
+<Route
+  path="/edit-job/:id"
+  element={
+    <ProtectedRoute>
+      <EditJob />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/forgot-password"
+  element={<ForgotPassword />}
+/>
+<Route
+  path="/reset-password/:token"
+  element={<ResetPassword />}
 />
       </Routes>
     </BrowserRouter>

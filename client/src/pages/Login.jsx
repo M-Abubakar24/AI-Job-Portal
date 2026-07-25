@@ -116,9 +116,12 @@ const Login = () => {
               Remember Me
             </label>
 
-            <a href="#" className="text-indigo-600">
-              Forgot Password?
-            </a>
+           <Link
+    to="/forgot-password"
+    className="text-indigo-600"
+>
+    Forgot Password?
+</Link>
           </div>
 
           <button

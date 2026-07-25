@@ -49,3 +49,23 @@ export const createJob = async (jobData) => {
 
   return response.data;
 };
+export const getJobById = async (id) => {
+  const response = await API.get(`/jobs/${id}`);
+  return response.data;
+};
+
+export const updateJob = async (id, jobData) => {
+  const token = localStorage.getItem("token");
+
+  const response = await API.put(
+    `/jobs/${id}`,
+    jobData,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return response.data;
+};
