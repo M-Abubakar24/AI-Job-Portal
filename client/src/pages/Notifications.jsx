@@ -29,7 +29,7 @@ const Notifications = () => {
       await markNotificationAsRead(id);
       fetchNotifications();
     } catch (error) {
-      alert("Failed to mark as read.");
+      alert("Failed to mark notification as read.");
     }
   };
 
@@ -46,65 +46,105 @@ const Notifications = () => {
 
   if (loading) {
     return (
-      <h1 className="text-center text-2xl mt-20">
-        Loading Notifications...
-      </h1>
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <h1 className="text-2xl font-semibold text-slate-600">
+          Loading Notifications...
+        </h1>
+      </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-6">
+    <div className="min-h-screen bg-slate-50 py-10 px-6">
       <div className="max-w-5xl mx-auto">
 
-        <h1 className="text-4xl font-bold mb-8">
-          Notifications
-        </h1>
+        {/* Header */}
+
+        <div className="mb-10">
+
+          <h1 className="text-4xl font-bold text-slate-800">
+            Notifications
+          </h1>
+
+          <p className="text-slate-500 mt-2">
+            Stay informed about job applications, recruiter activity,
+            and important updates.
+          </p>
+
+        </div>
 
         {notifications.length === 0 ? (
-          <div className="bg-white p-8 rounded-xl shadow text-center">
-            <h2 className="text-gray-500 text-xl">
-              No notifications.
+
+          <div className="bg-white rounded-2xl shadow-md p-12 text-center">
+
+            <div className="text-6xl mb-4">
+              🔔
+            </div>
+
+            <h2 className="text-2xl font-bold text-slate-700">
+              No Notifications
             </h2>
+
+            <p className="text-slate-500 mt-3">
+              You're all caught up.
+            </p>
+
           </div>
+
         ) : (
-          <div className="space-y-5">
+
+          <div className="space-y-6">
 
             {notifications.map((notification) => (
 
               <div
                 key={notification._id}
-                className={`rounded-xl shadow p-6 ${
+                className={`rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-7 ${
                   notification.isRead
                     ? "bg-white"
-                    : "bg-blue-50 border-l-4 border-blue-600"
+                    : "bg-indigo-50 border-l-4 border-indigo-600"
                 }`}
               >
 
-                <p className="text-lg">
-                  {notification.message}
-                </p>
+                <div className="flex justify-between items-start gap-6">
 
-                <p className="text-sm text-gray-500 mt-2">
-                  {new Date(notification.createdAt).toLocaleString()}
-                </p>
+                  <div className="flex-1">
 
-                <div className="flex gap-3 mt-5">
+                    {!notification.isRead && (
+                      <span className="inline-block bg-indigo-600 text-white text-xs px-3 py-1 rounded-full mb-3">
+                        New
+                      </span>
+                    )}
 
-                  {!notification.isRead && (
+                    <p className="text-lg text-slate-700 leading-7">
+                      {notification.message}
+                    </p>
+
+                    <p className="text-sm text-slate-500 mt-4">
+                      {new Date(notification.createdAt).toLocaleString()}
+                    </p>
+
+                  </div>
+
+                  <div className="flex flex-col gap-3">
+
+                    {!notification.isRead && (
+                      <button
+                        onClick={() => handleRead(notification._id)}
+                        className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-xl transition"
+                      >
+                        Mark Read
+                      </button>
+                    )}
+
                     <button
-                      onClick={() => handleRead(notification._id)}
-                      className="bg-green-600 text-white px-4 py-2 rounded-lg"
+                      onClick={() => handleDelete(notification._id)}
+                      className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-xl transition"
                     >
-                      Mark as Read
+                      Delete
                     </button>
-                  )}
 
-                  <button
-                    onClick={() => handleDelete(notification._id)}
-                    className="bg-red-600 text-white px-4 py-2 rounded-lg"
-                  >
-                    Delete
-                  </button>
+                  </div>
 
                 </div>
 
@@ -113,6 +153,7 @@ const Notifications = () => {
             ))}
 
           </div>
+
         )}
 
       </div>

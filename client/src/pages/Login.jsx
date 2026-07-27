@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
+import {
+  FaEnvelope,
+  FaLock,
+  FaEye,
+  FaEyeSlash,
+  FaBriefcase,
+} from "react-icons/fa";
 import { loginUser } from "../services/authService";
 
 const Login = () => {
@@ -23,52 +29,72 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const data = await loginUser(formData);
+      const data = await loginUser(formData);
 
-    // Save token & user
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
-    alert("Login Successful!");
+      alert("Login Successful!");
 
-    // Redirect based on role
-    if (data.user.role === "recruiter") {
-      navigate("/recruiter/dashboard");
-    } else if (data.user.role === "admin") {
-      navigate("/recruiter/dashboard");
-    } else {
-      navigate("/dashboard");
+      if (data.user.role === "recruiter") {
+        navigate("/recruiter/dashboard");
+      } else if (data.user.role === "admin") {
+        navigate("/recruiter/dashboard");
+      } else {
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      alert(error.response?.data?.message || "Login Failed");
+    } finally {
+      setLoading(false);
     }
-
-  } catch (error) {
-    alert(error.response?.data?.message || "Login Failed");
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center px-6">
-      <div className="bg-white shadow-xl rounded-2xl w-full max-w-md p-8">
-        <h1 className="text-3xl font-bold text-center text-indigo-600">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-blue-50 flex items-center justify-center px-6 py-10">
+
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-10">
+
+        {/* Logo */}
+
+        <div className="flex justify-center mb-5">
+
+          <div className="w-16 h-16 rounded-2xl bg-indigo-600 flex items-center justify-center shadow-lg">
+
+            <FaBriefcase className="text-white text-2xl" />
+
+          </div>
+
+        </div>
+
+        <h1 className="text-3xl font-bold text-center text-gray-800">
           Welcome Back
         </h1>
 
         <p className="text-center text-gray-500 mt-2">
-          Login to your Smart ATS account
+          Sign in to continue to your Smart ATS account.
         </p>
 
-        <form onSubmit={handleSubmit} className="mt-8 space-y-5">
-          {/* Email */}
-          <div>
-            <label className="font-medium">Email</label>
+        <form
+          onSubmit={handleSubmit}
+          className="mt-8 space-y-6"
+        >
 
-            <div className="flex items-center border rounded-lg mt-2 px-3">
+          {/* Email */}
+
+          <div>
+
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Email Address
+            </label>
+
+            <div className="flex items-center border rounded-xl px-4 focus-within:ring-2 focus-within:ring-indigo-500">
+
               <FaEnvelope className="text-gray-400" />
 
               <input
@@ -76,18 +102,25 @@ const Login = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="Enter email"
-                className="w-full p-3 outline-none"
+                placeholder="Enter your email"
+                className="w-full p-4 outline-none"
                 required
               />
+
             </div>
+
           </div>
 
           {/* Password */}
-          <div>
-            <label className="font-medium">Password</label>
 
-            <div className="flex items-center border rounded-lg mt-2 px-3">
+          <div>
+
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Password
+            </label>
+
+            <div className="flex items-center border rounded-xl px-4 focus-within:ring-2 focus-within:ring-indigo-500">
+
               <FaLock className="text-gray-400" />
 
               <input
@@ -95,52 +128,71 @@ const Login = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="Enter password"
-                className="w-full p-3 outline-none"
+                placeholder="Enter your password"
+                className="w-full p-4 outline-none"
                 required
               />
 
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
+                className="text-gray-500 hover:text-indigo-600"
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
+
             </div>
+
           </div>
 
           {/* Remember */}
-          <div className="flex justify-between">
-            <label className="flex gap-2">
-              <input type="checkbox" />
+
+          <div className="flex justify-between items-center text-sm">
+
+            <label className="flex items-center gap-2 text-gray-600">
+              <input
+                type="checkbox"
+                className="accent-indigo-600"
+              />
               Remember Me
             </label>
 
-           <Link
-    to="/forgot-password"
-    className="text-indigo-600"
->
-    Forgot Password?
-</Link>
+            <Link
+              to="/forgot-password"
+              className="text-indigo-600 hover:underline"
+            >
+              Forgot Password?
+            </Link>
+
           </div>
+
+          {/* Login */}
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700"
             disabled={loading}
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-xl font-semibold transition disabled:bg-gray-400"
           >
-            {loading ? "Logging In..." : "Login"}
+            {loading ? "Signing In..." : "Sign In"}
           </button>
+
         </form>
 
-        <p className="text-center mt-6">
+        <div className="mt-8 text-center text-gray-600">
+
           Don't have an account?
 
-          <Link to="/register" className="text-indigo-600 ml-2">
-            Register
+          <Link
+            to="/register"
+            className="text-indigo-600 font-semibold ml-2 hover:underline"
+          >
+            Create Account
           </Link>
-        </p>
+
+        </div>
+
       </div>
+
     </div>
   );
 };

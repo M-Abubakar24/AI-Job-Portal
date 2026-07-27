@@ -7,7 +7,6 @@ import Jobs from "./pages/Jobs";
 import JobDetails from "./pages/JobDetails";
 import Dashboard from "./pages/Dashboard";
 import ATSAnalysis from "./pages/ATSAnalysis";
-import SavedJobs from "./pages/SavedJobs";
 import Applications from "./pages/Applications";
 import Profile from "./pages/Profile";
 import RecruiterDashboard from "./pages/RecruiterDashboard";
@@ -31,58 +30,50 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/jobs/:id" element={<JobDetails />} />
-
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         {/* Jobseeker Routes */}
         <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+  path="/dashboard"
+  element={
+    <ProtectedRoute role="jobseeker">
+      <Dashboard />
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/ats-analysis"
-          element={
-            <ProtectedRoute>
-              <ATSAnalysis />
-            </ProtectedRoute>
-          }
-        />
+<Route
+  path="/profile"
+  element={
+    <ProtectedRoute role="jobseeker">
+      <Profile />
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/saved-jobs"
-          element={
-            <ProtectedRoute>
-              <SavedJobs />
-            </ProtectedRoute>
-          }
-        />
+<Route
+  path="/applications"
+  element={
+    <ProtectedRoute role="jobseeker">
+      <Applications />
+    </ProtectedRoute>
+  }
+/>
 
-        <Route
-          path="/applications"
-          element={
-            <ProtectedRoute>
-              <Applications />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        />
+<Route
+  path="/ats-analysis"
+  element={
+    <ProtectedRoute role="jobseeker">
+      <ATSAnalysis />
+    </ProtectedRoute>
+  }
+/>
 
         {/* Recruiter Dashboard */}
-        <Route
+       <Route
   path="/recruiter/dashboard"
   element={
-    <ProtectedRoute>
+    <ProtectedRoute role="recruiter">
       <RecruiterDashboard />
     </ProtectedRoute>
   }
@@ -90,40 +81,44 @@ function App() {
 <Route
   path="/create-job"
   element={
-    <ProtectedRoute>
+    <ProtectedRoute role="recruiter">
       <CreateJob />
     </ProtectedRoute>
   }
 />
+
 <Route
   path="/my-jobs"
   element={
-    <ProtectedRoute>
+    <ProtectedRoute role="recruiter">
       <MyJobs />
     </ProtectedRoute>
   }
 />
+
+<Route
+  path="/edit-job/:id"
+  element={
+    <ProtectedRoute role="recruiter">
+      <EditJob />
+    </ProtectedRoute>
+  }
+/>
+
 <Route
   path="/applicants/:jobId"
   element={
-    <ProtectedRoute>
+    <ProtectedRoute role="recruiter">
       <Applicants />
     </ProtectedRoute>
   }
 />
+
 <Route
   path="/notifications"
   element={
-    <ProtectedRoute>
+    <ProtectedRoute role="recruiter">
       <Notifications />
-    </ProtectedRoute>
-  }
-/>
-<Route
-  path="/edit-job/:id"
-  element={
-    <ProtectedRoute>
-      <EditJob />
     </ProtectedRoute>
   }
 />
@@ -135,9 +130,27 @@ function App() {
   path="/reset-password/:token"
   element={<ResetPassword />}
 />
-      </Routes>
-    </BrowserRouter>
-  );
+
+{/* 404 Route */}
+<Route
+  path="*"
+  element={
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-6xl font-bold text-indigo-600">
+          404
+        </h1>
+        <p className="mt-4 text-gray-600">
+          Page Not Found
+        </p>
+      </div>
+    </div>
+  }
+/>
+
+</Routes>
+</BrowserRouter>
+);
 }
 
 export default App;

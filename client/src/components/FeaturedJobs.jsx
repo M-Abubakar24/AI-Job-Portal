@@ -71,9 +71,18 @@ const FeaturedJobs = () => {
     <section className="py-20 bg-gray-100">
       <div className="max-w-7xl mx-auto px-6">
 
-        <h2 className="text-4xl font-bold text-center mb-12">
-          Featured Jobs
-        </h2>
+        <div className="text-center mb-14">
+
+  <h2 className="text-4xl font-bold text-gray-800">
+    Featured Opportunities
+  </h2>
+
+  <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+    Explore some of the latest opportunities from leading companies
+    around the world and take the next step in your career.
+  </p>
+
+</div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {jobs.map((job, index) => (
@@ -82,7 +91,7 @@ const FeaturedJobs = () => {
         </div>
 
         <div className="flex justify-center mt-12">
-          <button className="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition">
+          <button className="bg-indigo-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-indigo-700 hover:shadow-lg transition">
             View All Jobs
           </button>
         </div>

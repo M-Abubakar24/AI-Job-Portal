@@ -41,90 +41,165 @@ const MyJobs = () => {
 
   if (loading) {
     return (
-      <h1 className="text-center text-2xl mt-20">
-        Loading...
-      </h1>
+      <div className="min-h-screen flex justify-center items-center bg-slate-50">
+        <h1 className="text-2xl font-semibold text-slate-600">
+          Loading Jobs...
+        </h1>
+      </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-6">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-slate-50 py-10 px-6">
+      <div className="max-w-7xl mx-auto">
 
-        <h1 className="text-4xl font-bold mb-8">
-          My Jobs
-        </h1>
+        {/* Header */}
+
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10">
+
+          <div>
+            <h1 className="text-4xl font-bold text-slate-800">
+              My Jobs
+            </h1>
+
+            <p className="text-slate-500 mt-2">
+              Manage all your posted job openings from one place.
+            </p>
+          </div>
+
+          <Link
+            to="/create-job"
+            className="mt-5 md:mt-0 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl font-semibold transition"
+          >
+            + Create Job
+          </Link>
+
+        </div>
 
         {jobs.length === 0 ? (
-          <div className="bg-white rounded-xl shadow p-10 text-center">
-            <h2 className="text-2xl font-semibold">
+          <div className="bg-white rounded-2xl shadow-md p-12 text-center">
+
+            <div className="text-6xl mb-4">
+              💼
+            </div>
+
+            <h2 className="text-2xl font-bold text-slate-700">
               No Jobs Posted Yet
             </h2>
 
-            <p className="text-gray-500 mt-2">
-              Create your first job posting.
+            <p className="text-slate-500 mt-3">
+              Start hiring by creating your first job posting.
             </p>
 
             <Link
               to="/create-job"
-              className="inline-block mt-6 bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700"
+              className="inline-block mt-8 bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-xl transition"
             >
-              Create Job
+              Create Your First Job
             </Link>
+
           </div>
         ) : (
-          <div className="grid gap-6">
+          <div className="grid gap-7">
 
             {jobs.map((job) => (
+
               <div
                 key={job._id}
-                className="bg-white rounded-xl shadow-lg p-6"
+                className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-8"
               >
-                <h2 className="text-2xl font-bold">
-                  {job.title}
-                </h2>
 
-                <p className="text-gray-600 font-medium">
-                  {job.company}
-                </p>
+                <div className="flex flex-col lg:flex-row justify-between gap-8">
 
-                <p className="mt-2">
-                  📍 {job.location}
-                </p>
+                  {/* Left */}
 
-                <p>
-                  💰 ${job.salary}
-                </p>
+                  <div className="flex-1">
 
-                <p>
-                  🕒 {job.employmentType}
-                </p>
+                    <h2 className="text-3xl font-bold text-slate-800">
+                      {job.title}
+                    </h2>
 
-                <div className="flex flex-wrap gap-3 mt-6">
+                    <p className="text-indigo-600 font-semibold mt-2">
+                      {job.company}
+                    </p>
 
-                  <Link
-                    to={`/edit-job/${job._id}`}
-                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg"
-                  >
-                    Edit
-                  </Link>
+                    <div className="grid md:grid-cols-2 gap-5 mt-6">
 
-                  <button
-                    onClick={() => handleDelete(job._id)}
-                    className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg"
-                  >
-                    Delete
-                  </button>
+                      <div>
+                        <p className="text-sm text-slate-500">
+                          Location
+                        </p>
 
-                  <Link
-                    to={`/applicants/${job._id}`}
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg"
-                  >
-                    View Applicants
-                  </Link>
+                        <p className="font-semibold">
+                          {job.location}
+                        </p>
+                      </div>
+
+                      <div>
+                        <p className="text-sm text-slate-500">
+                          Salary
+                        </p>
+
+                        <p className="font-semibold">
+                          ${job.salary}
+                        </p>
+                      </div>
+
+                      <div>
+                        <p className="text-sm text-slate-500">
+                          Employment
+                        </p>
+
+                        <p className="font-semibold">
+                          {job.employmentType}
+                        </p>
+                      </div>
+
+                      <div>
+                        <p className="text-sm text-slate-500">
+                          Posted
+                        </p>
+
+                        <p className="font-semibold">
+                          {new Date(job.createdAt).toLocaleDateString()}
+                        </p>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  {/* Right */}
+
+                  <div className="flex flex-col gap-3 w-full lg:w-56">
+
+                    <Link
+                      to={`/applicants/${job._id}`}
+                      className="bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl text-center font-semibold transition"
+                    >
+                      View Applicants
+                    </Link>
+
+                    <Link
+                      to={`/edit-job/${job._id}`}
+                      className="bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-xl text-center font-semibold transition"
+                    >
+                      Edit Job
+                    </Link>
+
+                    <button
+                      onClick={() => handleDelete(job._id)}
+                      className="bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-semibold transition"
+                    >
+                      Delete Job
+                    </button>
+
+                  </div>
 
                 </div>
+
               </div>
+
             ))}
 
           </div>

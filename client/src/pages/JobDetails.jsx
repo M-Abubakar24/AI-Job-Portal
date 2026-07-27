@@ -1,132 +1,298 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import {
+  FaMapMarkerAlt,
+  FaDollarSign,
+  FaBriefcase,
+  FaStar,
+  FaBuilding,
+  FaCheckCircle,
+} from "react-icons/fa";
+
 import { getJobById } from "../services/jobService";
 import { applyJob } from "../services/applicationService";
 
 const JobDetails = () => {
-const { id } = useParams();
+  const { id } = useParams();
 
-const [job, setJob] = useState(null);
-const [loading, setLoading] = useState(true);
-const [applying, setApplying] = useState(false);
+  const [job, setJob] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [applying, setApplying] = useState(false);
 
-useEffect(() => {
+  useEffect(() => {
     fetchJob();
-}, []);
+  }, []);
 
-const fetchJob = async () => {
-  try {
-    const data = await getJobById(id);
+  const fetchJob = async () => {
+    try {
+      const data = await getJobById(id);
       setJob(data.job);
-    }catch (error) {
+    } catch (error) {
       console.log(error);
-      alert("Failed to load job details.");
-    }finally {
+    } finally {
       setLoading(false);
     }
   };
-const handleApply = async () => {
-  try{
-    setApplying(true);
 
-    await applyJob(job._id);
+  const handleApply = async () => {
+    try {
+      setApplying(true);
 
-    alert("Application submitted successfully!");
-  }catch (error) {
-    alert(error.response?.data?.message || "Application failed");
-  }finally {
-    setApplying(false);
-  }
-};
+      await applyJob(job._id);
+
+      alert("Application submitted successfully!");
+
+    } catch (error) {
+      alert(
+        error.response?.data?.message ||
+          "Application failed"
+      );
+    } finally {
+      setApplying(false);
+    }
+  };
+
   if (loading) {
     return (
-      <h1 className="text-center text-2xl mt-20">
-        Loading...
-      </h1>
+      <div className="min-h-screen flex justify-center items-center bg-gray-100">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-indigo-600"></div>
+      </div>
     );
   }
 
   if (!job) {
     return (
-      <h1 className="text-center text-2xl mt-20">
-        Job Not Found
-      </h1>
+      <div className="min-h-screen flex justify-center items-center">
+        <h1 className="text-4xl font-bold">
+          Job Not Found
+        </h1>
+      </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-6">
-      <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-xl p-8">
+    <div className="min-h-screen bg-gray-100 py-12">
 
-        <h1 className="text-4xl font-bold">
-          {job.title}
-        </h1>
+      <div className="max-w-6xl mx-auto px-6">
 
-        <p className="text-xl text-indigo-600 mt-2">
-          {job.company}
-        </p>
+        {/* Hero */}
 
-        <div className="grid md:grid-cols-2 gap-4 mt-8">
+        <div className="bg-gradient-to-r from-indigo-600 to-blue-600 rounded-3xl shadow-xl text-white p-10">
 
-          <p><strong>📍 Location:</strong> {job.location}</p>
+          <div className="flex flex-col md:flex-row justify-between items-center">
 
-          <p><strong>💰 Salary:</strong> ${job.salary}</p>
+            <div>
 
-          <p><strong>🕒 Employment:</strong> {job.employmentType}</p>
+              <h1 className="text-5xl font-bold">
+                {job.title}
+              </h1>
 
-          <p><strong>⭐ Experience:</strong> {job.experienceLevel}</p>
+              <div className="flex items-center gap-3 mt-4 text-lg">
+
+                <FaBuilding />
+
+                {job.company}
+
+              </div>
+
+            </div>
+
+            <div className="w-24 h-24 rounded-full bg-white text-indigo-600 flex items-center justify-center text-5xl font-bold mt-8 md:mt-0">
+
+              {job.company?.charAt(0)}
+
+            </div>
+
+          </div>
 
         </div>
 
-        <div className="mt-8">
-          <h2 className="text-2xl font-bold mb-3">
-            Job Description
-          </h2>
+        {/* Main */}
 
-          <p className="text-gray-700">
-            {job.description}
-          </p>
-        </div>
+        <div className="grid lg:grid-cols-3 gap-8 mt-10">
 
-        <div className="mt-8">
-          <h2 className="text-2xl font-bold mb-3">
-            Requirements
-          </h2>
+          {/* Left */}
 
-          <ul className="list-disc ml-6">
-            {job.requirements?.map((req, index) => (
-              <li key={index}>{req}</li>
-            ))}
-          </ul>
-        </div>
+          <div className="lg:col-span-2 space-y-8">
 
-        <div className="mt-8">
-          <h2 className="text-2xl font-bold mb-3">
-            Required Skills
-          </h2>
+            <div className="bg-white rounded-2xl shadow-md p-8">
 
-          <div className="flex flex-wrap gap-2">
-            {job.skills?.map((skill, index) => (
-              <span
-                key={index}
-                className="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full"
+              <h2 className="text-2xl font-bold mb-6">
+                Job Overview
+              </h2>
+
+              <div className="grid md:grid-cols-2 gap-6">
+
+                <div className="flex gap-3 items-center">
+
+                  <FaMapMarkerAlt className="text-red-500 text-xl" />
+
+                  <div>
+
+                    <p className="text-gray-500">
+                      Location
+                    </p>
+
+                    <p className="font-semibold">
+                      {job.location}
+                    </p>
+
+                  </div>
+
+                </div>
+
+                <div className="flex gap-3 items-center">
+
+                  <FaDollarSign className="text-green-600 text-xl" />
+
+                  <div>
+
+                    <p className="text-gray-500">
+                      Salary
+                    </p>
+
+                    <p className="font-semibold">
+                      ${job.salary}
+                    </p>
+
+                  </div>
+
+                </div>
+
+                <div className="flex gap-3 items-center">
+
+                  <FaBriefcase className="text-blue-600 text-xl" />
+
+                  <div>
+
+                    <p className="text-gray-500">
+                      Employment
+                    </p>
+
+                    <p className="font-semibold">
+                      {job.employmentType}
+                    </p>
+
+                  </div>
+
+                </div>
+
+                <div className="flex gap-3 items-center">
+
+                  <FaStar className="text-yellow-500 text-xl" />
+
+                  <div>
+
+                    <p className="text-gray-500">
+                      Experience
+                    </p>
+
+                    <p className="font-semibold">
+                      {job.experienceLevel}
+                    </p>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* Description */}
+
+            <div className="bg-white rounded-2xl shadow-md p-8">
+
+              <h2 className="text-2xl font-bold mb-5">
+                Job Description
+              </h2>
+
+              <p className="text-gray-600 leading-8">
+                {job.description}
+              </p>
+
+            </div>
+
+            {/* Requirements */}
+
+            <div className="bg-white rounded-2xl shadow-md p-8">
+
+              <h2 className="text-2xl font-bold mb-6">
+                Requirements
+              </h2>
+
+              <div className="space-y-4">
+
+                {job.requirements?.map((req, index) => (
+
+                  <div
+                    key={index}
+                    className="flex gap-3 items-start"
+                  >
+
+                    <FaCheckCircle className="text-green-500 mt-1" />
+
+                    <p>{req}</p>
+
+                  </div>
+
+                ))}
+
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* Right */}
+
+          <div>
+
+            <div className="bg-white rounded-2xl shadow-md p-8 sticky top-10">
+
+              <h2 className="text-2xl font-bold">
+                Required Skills
+              </h2>
+
+              <div className="flex flex-wrap gap-3 mt-6">
+
+                {job.skills?.map((skill, index) => (
+
+                  <span
+                    key={index}
+                    className="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full font-medium"
+                  >
+                    {skill}
+                  </span>
+
+                ))}
+
+              </div>
+
+              <button
+                onClick={handleApply}
+                disabled={applying}
+                className="w-full mt-10 bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-xl font-semibold transition disabled:bg-gray-400"
               >
 
-                {skill}
-              </span>
-            ))}
+                {applying
+                  ? "Applying..."
+                  : "Apply Now"}
+
+              </button>
+
+              <p className="text-center text-gray-500 text-sm mt-4">
+                Your application will be sent directly to the recruiter.
+              </p>
+
+            </div>
+
           </div>
+
         </div>
 
-        <button
-  onClick={handleApply}
-  disabled={applying}
-  className="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 disabled:bg-gray-400"
->
-  {applying ? "Applying..." : "Apply Now"}
-</button>
-
       </div>
+
     </div>
   );
 };
