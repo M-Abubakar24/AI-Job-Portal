@@ -1,117 +1,89 @@
-# Smart ATS Job Portal
+# 🚀 Smart ATS Job Portal
 
-A full-stack Applicant Tracking System (ATS) built with the MERN Stack that connects job seekers and recruiters through a modern recruitment platform. The system enables job seekers to upload and analyze resumes using an ATS-based resume analyzer, while recruiters can efficiently manage job postings and applications.
+A full-stack MERN-based Smart ATS Job Portal that connects job seekers and recruiters through a modern recruitment platform. The system provides secure authentication, job management, resume uploads, ATS resume analysis, application tracking, and recruiter dashboards.
 
 ---
 
-## 🚀 Tech Stack
+## 📖 Project Overview
 
-### Frontend
-- React.js
-- Tailwind CSS
-- Axios
-- React Router DOM
+Smart ATS Job Portal is a recruitment platform designed to simplify the hiring process for both recruiters and job seekers.
 
-### Backend
-- Node.js
-- Express.js
-- MongoDB
-- JWT Authentication
-- Cloudinary
-- Multer
+Job seekers can:
+- Create an account
+- Search available jobs
+- Upload resumes
+- Analyze resumes using ATS
+- Apply for jobs
+- Track applications
 
-### Database
-- MongoDB Atlas
+Recruiters can:
+- Create and manage job postings
+- View applicants
+- Manage recruitment activities
+- Receive notifications
 
 ---
 
 ## ✨ Features
 
-### 🔐 Authentication & Authorization
-- Secure JWT Authentication
-- Role-Based Access Control
-- Protected Routes
-- Password Encryption
-
-### 👨‍💼 Job Seeker Features
-- User Registration & Login
-- Profile Management
-- Resume Upload (PDF)
-- ATS Resume Analysis
-- ATS Resume Score
-- Resume Strength Evaluation
-- Technical Skills Detection
-- Missing Skills Analysis
-- Resume Improvement Suggestions
-- Apply for Jobs
-- Save Jobs
-- View Applied Jobs
-- Email Notifications
-
-### 🏢 Recruiter Features
-- Recruiter Registration & Login
-- Create Job Posts
-- Update Job Posts
-- Delete Job Posts
-- View Posted Jobs
-- View Applications
-- Recruiter Dashboard
-
-### 📄 ATS Resume Analyzer
-- PDF Resume Parsing
-- Contact Information Detection
-- Resume Section Detection
-- Technical Skills Extraction
-- ATS Compatibility Score
-- Resume Quality Assessment
-- Personalized Resume Suggestions
-
-### ⚙️ General Features
-- RESTful API
-- Cloudinary Resume Storage
-- Secure File Upload
-- MongoDB Database
-- Responsive Design
-
----
-
-## 🛠️ Project Status
-
-### ✅ Completed
+### Authentication
+- User Registration
+- Secure Login
 - JWT Authentication
 - Role-Based Authorization
-- Resume Upload
-- ATS Resume Analyzer
-- Job Management
-- Job Applications
-- Saved Jobs
+- Forgot Password
+- Reset Password
+
+### Job Seeker
+- Browse Jobs
+- View Job Details
+- Apply for Jobs
+- ATS Resume Analysis
+- Track Applications
+- Profile Management
+
+### Recruiter
 - Recruiter Dashboard
-- Email Notifications
-- REST API Development
+- Create Jobs
+- Edit Jobs
+- Delete Jobs
+- View Posted Jobs
+- View Applicants
+- Notifications
 
-### 🚧 Currently Working On
-- Frontend Dashboard
-- Resume vs Job Matching
-- Recruiter Analytics
-- Candidate Ranking
-- UI Enhancements
-
----
-
-## 📌 Future Improvements
-
-- Resume vs Job Description Matching
-- ATS Candidate Ranking
-- Advanced Recruiter Analytics
-- Interview Scheduling
-- Admin Dashboard
-- Resume Builder
-- Search & Filter Improvements
+### General
+- Protected Routes
+- Responsive Design
+- RESTful API
+- MongoDB Database
+- File Upload Support
 
 ---
 
-## 👨‍💻 Author
+## 🛠 Tech Stack
 
-**Muhammad Abubakar**
+### Frontend
 
-Software Engineer | MERN Stack Developer
+- React.js
+- React Router DOM
+- Axios
+- Tailwind CSS
+- React Hook Form
+- React Toastify
+- React Icons
+
+### Backend
+
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT Authentication
+- bcryptjs
+- Multer
+- Cloudinary
+- Nodemailer
+
+---
+
+## 📂 Project Structure
